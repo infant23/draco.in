@@ -8,13 +8,15 @@ pip install django==2.0.9
 django-admin startproject mysite .
 python manage.py migrate
 python manage.py runserver 0:8000
-python manage.py startapp polls
-python manage.py makemigrations polls
-python manage.py sqlmigrate polls 0001
+python manage.py startapp dracoin
+python manage.py makemigrations dracoin
+python manage.py sqlmigrate dracoin 0001
 python manage.py check
 python manage.py migrate
 python manage.py shell
-python manage.py test polls
+python manage.py test dracoin
+
+pip install Pillow
 
 python manage.py createsuperuser
 admin

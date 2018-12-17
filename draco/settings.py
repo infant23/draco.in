@@ -119,3 +119,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Email settings SMTP:
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
+# Email for debug:
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 1025
+# #use:
+# python -m smtpd -n -c DebuggingServer localhost:1025

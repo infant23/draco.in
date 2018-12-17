@@ -8,3 +8,13 @@
     <p>No polls are available.</p>
 {% endif %}
 
+<h1>FeedBack</h1>
+<form id="feedback" action="{% url 'dracoin:mail' %}" method="post">
+{% csrf_token %}
+	<input type="text" name="subject" placeholder="Subject...">
+	<input type="email" name="from_email" placeholder="Your email">
+	<input type="submit" value="Send">
+	<input type="reset" value="Clean">
+</form>
+<textarea name="message" placeholder="Write here..." required form="feedback"></textarea>
+<a href="{% url 'dracoin:index' %}">index</a>
