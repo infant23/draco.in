@@ -42,3 +42,8 @@ class DetailView(generic.DetailView):
     model = Article
     template_name = 'dracoin/detail.html'
 
+class TagsView(generic.ListView):
+    template_name = 'dracoin/tags.html'
+    context_object_name = 'tag_list'
+    def get_queryset(self):
+        return Tag.objects.all()[:10]

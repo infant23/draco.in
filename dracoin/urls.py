@@ -6,6 +6,7 @@ app_name = 'dracoin'
 urlpatterns = [
 	path('', views.IndexView.as_view(), name='index'),
 	path('<int:pk>/', views.DetailView.as_view(), name='detail'),
+	path('tags/', views.TagsView.as_view(), name='tags'),
     # path('', views.index, name='index'),
     # path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     # path('<int:article_id>/', views.detail, name='detail'),
