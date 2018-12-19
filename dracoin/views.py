@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
-from .models import Article, Tag, Image
+from .models import Article, Tag, Image, Comment
 
 class IndexView(generic.ListView):
     template_name = 'dracoin/index.html'
@@ -19,7 +19,6 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Article
     template_name = 'dracoin/detail.html'
-    # send_mail('subject', 'message', 'admin@example.com', ['admin@example.com'])
 
 class TagsView(generic.ListView):
     template_name = 'dracoin/tags.html'
@@ -27,30 +26,22 @@ class TagsView(generic.ListView):
     def get_queryset(self):
         return Tag.objects.all()
 
-# class FeedBack(object):
-#     """docstring for FeedBack"""
-#     def __init__(self, arg):
-#         super(FeedBack, self).__init__()
-#         self.arg = arg
 
-# def feedback(request):
-#     model = Article
-#     template_name = 'dracoin/mail.html'
-def send_email(request):
-    subject = request.POST.get('subject', '')
-    message = request.POST.get('message', '')
-    from_email = request.POST.get('from_email', '')
-    # return HttpResponseRedirect(reverse('dracoin:index'))
-    subject = request.POST['subject']
-    message = request.POST['message']
-    from_email = request.POST['from_email']
+class FeedBack():
+    def send_email(request):
+        subject = request.POST.get('subject', '')
+        message = request.POST.get('message', '')
+        from_email = request.POST.get('from_email', '')
+        subject = request.POST['subject']
+        message = request.POST['message']
+        from_email = request.POST['from_email']
 
-    if subject and message and from_email:
-        try:
-            send_mail(subject, message, from_email, ['root@localhost'], )
-        except BadHeaderError:
-            return HttpResponse('Invalid header found.')
-        return HttpResponseRedirect(reverse('dracoin:index'))
+        if subject and message and from_email:
+            try:
+                send_mail(subject, message, from_email, ['root@localhost'], )
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return HttpResponseRedirect(reverse('dracoin:index'))
 
-    else:
-        return HttpResponseRedirect(reverse('dracoin:mail'))
+        else:
+            return HttpResponseRedirect(reverse('dracoin:mail'))
