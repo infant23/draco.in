@@ -4,11 +4,11 @@ from . import views
 
 app_name = 'dracoin'
 urlpatterns = [
-	path('', views.IndexView.as_view(), name='index'),
+	path('', views.last_articles, name='index'),
 	path('<int:pk>/', views.DetailView.as_view(), name='detail'),
-	path('tags/', views.TagsView.as_view(), name='tags'),
-	path('<int:root>/comments/', views.CommentsView.as_view(), name='comments'),
-	path('mail/', views.FeedBack.send_email, name='mail'),
+	path('tags/', views.all_tags, name='tags'),
+	path('<int:pk>/comments/', views.article_comments, name='comments'),
+	path('mail/', views.send_email, name='mail'),
 	# path('mail/', views.FeedBack.send_email, name='mail'),
     # path('', views.index, name='index'),
     # path('<int:pk>/', views.DetailView.as_view(), name='detail'),
