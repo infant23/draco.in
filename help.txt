@@ -25,4 +25,11 @@ threeone4
 
 
 
+# Email for debug:
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 1025
+# #use:
+# python -m smtpd -n -c DebuggingServer localhost:1025
+
+
 
