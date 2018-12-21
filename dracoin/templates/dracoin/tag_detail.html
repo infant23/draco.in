@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ block.super }} - {{ tag.title }}
+{% endblock %}
+
+{% block content %}
+    <h1>Articles with "{{ tag.title|title}}"</h1>
+    <ul>
+    {% for a in tag.post.all %}
+        </ul>
+            <div class="card mb-4">
+            <h5 class="card-header">{{ a.pub_date }}</h5>
+            <div class="card-body">
+              <h5 class="card-title"><a href="{% url 'dracoin:post_detail_url' a.slug %}">{{ a.title }}</a></h5>
+              <p class="card-text">{{ a.content|truncatewords:20 }}</p>
+              <a href="{% url 'dracoin:post_detail_url' a.slug %}" class="btn btn-primary">Читати</a>
+              <a href="{{ a.get_absolute_url }}" class="btn btn-primary">Читати</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block feedback %}
+    <h1>FeedBack</h1>
+    <form id="feedback" action="{% url 'dracoin:mail' %}" method="post">
+    {% csrf_token %}
+        <input type="text" name="subject" placeholder="Subject...">
+        <input type="email" name="from_email" placeholder="Your email">
+        <input type="submit" value="Send">
+        <input type="reset" value="Clean">
+    </form>
+    <textarea name="message" placeholder="Write here..." required form="feedback"></textarea>
+    <a href="{% url 'dracoin:index' %}">index</a>
+{% endblock %}

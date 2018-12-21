@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import reverse
 
 class Article(models.Model):
 	title = models.CharField(max_length=200, db_index=True)
@@ -6,11 +7,21 @@ class Article(models.Model):
 	content = models.TextField(blank=True, max_length=2000, db_index=True)
 	author = models.CharField(max_length=200)
 	pub_date = models.DateTimeField('date published', auto_now_add=True)
+	tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
+	def get_absolute_url(self):
+		return reverse('dracoin:post_detail_url', kwargs={'slug': self.slug})
+	def get_comments(self):
+		return Comment.objects.filter(root=self.pk)
+	def get_tags(self):
+		return Tag.objects.filter(posts=self.pk)
 	def __str__(self):
 		return self.title
 
 class Tag(models.Model):
 	title = models.CharField(max_length=200, unique=True)
+	slug = models.SlugField(max_length=200, unique=True)
+	def get_absolute_url(self):
+		return reverse('dracoin:post_detail_url', kwargs={'slug': self.slug})
 	def __str__(self):
 		return self.title
 

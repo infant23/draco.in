@@ -1,9 +1,38 @@
-<h1>{{ article.title }}</h1>
-<h2>{{ article.content }}</h2>
-<h2>{{ article.author }}</h2>
-<h2>{{ article.pub_date }}</h2>
-<ul>
-<!-- {% for q in question.choice_set.all %}
-    <li>{{ q.choice_text }}</li>
-{% endfor %} -->
-</ul>
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ block.super }} - {{ article.title }}
+{% endblock %}
+
+{% block content %}
+	<h1 class="mt-5">{{ article.title }}</h1>
+	<p>{{ article.content }}</p>
+	<p>{{ article.author }}</p>
+	<p>{{ article.pub_date }}</p>
+	{% if article.get_comments %}
+	    <ul>
+	    {% for c in article.get_comments %}
+	        <li>
+	        	{{ c.name }}
+	        	{{ c.pub_date }}
+	        	{{ c.content }}
+	        </li>
+	    {% endfor %}
+	    </ul>
+	{% else %}
+	    <p>No comments are available.</p>
+	{% endif %}
+{% endblock %}
+
+{% block feedback %}
+    <h1>FeedBack</h1>
+    <form id="feedback" action="{% url 'dracoin:mail' %}" method="post">
+    {% csrf_token %}
+    	<input type="text" name="subject" placeholder="Subject...">
+    	<input type="email" name="from_email" placeholder="Your email">
+    	<input type="submit" value="Send">
+    	<input type="reset" value="Clean">
+    </form>
+    <textarea name="message" placeholder="Write here..." required form="feedback"></textarea>
+    <a href="{% url 'dracoin:index' %}">index</a>
+{% endblock %}

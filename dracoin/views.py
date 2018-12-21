@@ -13,17 +13,26 @@ def last_articles(request):
     article_list = Article.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
     return render(request, template, context={'article_list' : article_list})
 
-def article_comments(request):
-    template = 'dracoin/coments.html'
+def post_detail(request, slug):
+    template = 'dracoin/detail.html'
+    article = Article.objects.get(slug__iexact=slug)
+    return render(request, template, context={'article' : article})
+
+def article_comments(request, root_id):
+    template = 'dracoin/comments.html'
     print(request)
-    # comment_list = Comment.objects.filter(root=request.POST.get('pk', ''))
-    comment_list = Comment.objects.all()
+    comment_list = Comment.objects.filter(root=root_id)
     return render(request, template, context={'comment_list' : comment_list})
 
 def all_tags(request):
     template = 'dracoin/tags.html'
     tag_list = Tag.objects.all()
     return render(request, template, context={'tag_list' : tag_list})
+
+def tag_detail(request, slug):
+    template = 'dracoin/tag_detail.html'
+    tag = Tag.objects.get(slug__iexact=slug)
+    return render(request, template, context={'tag' : tag})
 
 def send_email(request):
     subject = request.POST.get('subject', '')
@@ -41,15 +50,5 @@ def send_email(request):
         return HttpResponseRedirect(reverse('dracoin:index'))
 
     else:
-        return HttpResponseRedirect(reverse('dracoin:mail'))
+        return HttpResponseRedirect(reverse('dracoin:index'))
 
-
-class DetailView(generic.DetailView):
-    model = Article
-    template_name = 'dracoin/detail.html'
-
-class CommentsView(generic.ListView):
-    template_name = 'dracoin/comments.html'
-    context_object_name = 'comment_list'
-    def queryset(self, request):
-        return Comment.objects.filter(root=request.POST.get('post_id', ''))
