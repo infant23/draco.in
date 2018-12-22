@@ -1,10 +1,7 @@
 https://docs.djangoproject.com/en/2.1/intro/tutorial01/
 # Python:
 
-python3 -m venv myvenv
-source myvenv/bin/activate
-pip install django==2.0.9
-pip install Pillow
+python3 -m venv myvenv && source myvenv/bin/activate && pip install django==2.0.9 Pillow
 
 # $ sudo apt install python-virtualenv
 # $ virtualenv --python=python3.4 myvenv

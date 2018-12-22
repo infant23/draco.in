@@ -3,22 +3,31 @@ from django.core.mail import BadHeaderError, send_mail
 from django.template import loader
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.views import generic, View
+from django.views.generic import View
 from django.utils import timezone
 
 from .models import Article, Tag, Image, Comment
+from .utils import ObjectDetailMixin
 
-class PostDetail(View):
-    def get(self, request, slug):
-        template = 'dracoin/post_detail.html'
-        article = Article.objects.get(slug__iexact=slug)
-        return render(request, template, context={'article' : article})
+class PostDetail(ObjectDetailMixin, View):
+    model = Article
+    template = 'dracoin/post_detail.html'
 
-class TagDetail(View):
-    def get(self, request, slug):
-        template = 'dracoin/tag_detail.html'
-        tag = Tag.objects.get(slug__iexact=slug)
-        return render(request, template, context={'tag' : tag})        
+class TagDetail(ObjectDetailMixin, View):
+    model = Tag
+    template = 'dracoin/tag_detail.html'
+
+# class PostDetail(View):
+#     def get(self, request, slug):
+#         template = 'dracoin/post_detail.html'
+#         post = get_object_or_404(Article, slug__iexact=slug)
+#         return render(request, template, context={'article' : post})
+
+# class TagDetail(View):
+#     def get(self, request, slug):
+#         template = 'dracoin/tag_detail.html'
+#         tag = get_object_or_404(Tag, slug__iexact=slug)
+#         return render(request, template, context={'tag' : tag})        
 
 def last_articles(request):
     template = 'dracoin/index.html'
@@ -32,7 +41,6 @@ def post_detail(request, slug):
 
 def article_comments(request, root_id):
     template = 'dracoin/comments.html'
-    print(request)
     comment_list = Comment.objects.filter(root=root_id)
     return render(request, template, context={'comment_list' : comment_list})
 
