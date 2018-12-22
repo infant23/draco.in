@@ -12,8 +12,6 @@ class Article(models.Model):
 		return reverse('dracoin:post_detail_url', kwargs={'slug': self.slug})
 	def get_comments(self):
 		return Comment.objects.filter(root=self.pk)
-	def get_tags(self):
-		return self.tags.all()
 	def __str__(self):
 		return self.title
 

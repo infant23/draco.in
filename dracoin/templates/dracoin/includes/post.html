@@ -7,4 +7,9 @@
 		<a href="{% url 'dracoin:post_detail_url' post.slug %}" class="btn btn-primary">Читати</a>
 		<a href="{{ post.get_absolute_url }}" class="btn btn-primary">Читати</a>
 	</div>
+	<div class="card-footer text-muted">
+	    {% for t in post.tags.all %}
+	  		{% include 'dracoin/includes/tags.html' %}
+	    {% endfor %}
+	</div>
 </div>
