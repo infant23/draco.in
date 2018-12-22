@@ -13,7 +13,7 @@ class Article(models.Model):
 	def get_comments(self):
 		return Comment.objects.filter(root=self.pk)
 	def get_tags(self):
-		return Tag.objects.filter(posts=self.pk)
+		return self.tags.all()
 	def __str__(self):
 		return self.title
 
@@ -21,7 +21,7 @@ class Tag(models.Model):
 	title = models.CharField(max_length=200, unique=True)
 	slug = models.SlugField(max_length=200, unique=True)
 	def get_absolute_url(self):
-		return reverse('dracoin:post_detail_url', kwargs={'slug': self.slug})
+		return reverse('dracoin:tag_detail_url', kwargs={'slug': self.slug})
 	def __str__(self):
 		return self.title
 

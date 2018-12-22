@@ -9,5 +9,4 @@ urlpatterns = [
 	path('tags/', views.all_tags, name='tags_list_url'),
 	path('tag/<str:slug>/', views.tag_detail, name='tag_detail_url'),
 	path('comments/<int:root_id>', views.article_comments, name='comments'),
-	path('mail/', views.send_email, name='mail'),
 ]
