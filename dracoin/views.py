@@ -8,6 +8,18 @@ from django.utils import timezone
 
 from .models import Article, Tag, Image, Comment
 
+class PostDetail(View):
+    def get(self, request, slug):
+        template = 'dracoin/post_detail.html'
+        article = Article.objects.get(slug__iexact=slug)
+        return render(request, template, context={'article' : article})
+
+class TagDetail(View):
+    def get(self, request, slug):
+        template = 'dracoin/tag_detail.html'
+        tag = Tag.objects.get(slug__iexact=slug)
+        return render(request, template, context={'tag' : tag})        
+
 def last_articles(request):
     template = 'dracoin/index.html'
     article_list = Article.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
