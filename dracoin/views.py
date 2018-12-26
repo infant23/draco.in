@@ -1,33 +1,52 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core.mail import BadHeaderError, send_mail
 from django.template import loader
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views.generic import View
 from django.utils import timezone
 
 from .models import Article, Tag, Image, Comment
 from .utils import ObjectDetailMixin
+from .forms import PostForm, TagForm
 
 class PostDetail(ObjectDetailMixin, View):
     model = Article
     template = 'dracoin/post_detail.html'
 
+class PostCreate(View):
+    template = 'dracoin/post_create.html'
+    def get(self, request):
+        form = PostForm()
+        return render(request, self.template, context={'form': form})
+
+    def post(self, request):
+        bound_form = PostForm(request.POST)
+
+        if bound_form.is_valid():
+            new_tag = bound_form.save()
+            return redirect(new_tag)
+        return render(request, self.template, context={'form': bound_form})
+
+
 class TagDetail(ObjectDetailMixin, View):
     model = Tag
     template = 'dracoin/tag_detail.html'
 
-# class PostDetail(View):
-#     def get(self, request, slug):
-#         template = 'dracoin/post_detail.html'
-#         post = get_object_or_404(Article, slug__iexact=slug)
-#         return render(request, template, context={'article' : post})
+class TagCreate(View):
+    template = 'dracoin/tag_create.html'
+    def get(self, request):
+        form = TagForm()
+        return render(request, self.template, context={'form': form})
 
-# class TagDetail(View):
-#     def get(self, request, slug):
-#         template = 'dracoin/tag_detail.html'
-#         tag = get_object_or_404(Tag, slug__iexact=slug)
-#         return render(request, template, context={'tag' : tag})        
+    def post(self, request):
+        bound_form = TagForm(request.POST)
+
+        if bound_form.is_valid():
+            new_tag = bound_form.save()
+            return redirect(new_tag)
+        return render(request, self.template, context={'form': bound_form})
+  
 
 def last_articles(request):
     template = 'dracoin/index.html'
