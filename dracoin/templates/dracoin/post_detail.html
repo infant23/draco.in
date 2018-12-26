@@ -22,7 +22,7 @@
 	{% else %}
 	    <p>No comments are available.</p>
 	{% endif %}
-	{% for t in article.tags.all %}
+	{% for tag in article.tags.all %}
   		{% include 'dracoin/includes/tags.html' %}
     {% endfor %}
 {% endblock %}

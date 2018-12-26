@@ -18,7 +18,13 @@ class Article(models.Model):
 	
 	def get_absolute_url(self):
 		return reverse('dracoin:post_detail_url', kwargs={'slug': self.slug})
+
+	def get_update_url(self):
+		return reverse('dracoin:post_update_url', kwargs={'slug': self.slug})
 	
+	def get_delete_url(self):
+		return reverse('dracoin:post_delete_url', kwargs={'slug': self.slug})
+
 	def get_comments(self):
 		return Comment.objects.filter(root=self.pk)
 
@@ -36,7 +42,13 @@ class Tag(models.Model):
 	
 	def get_absolute_url(self):
 		return reverse('dracoin:tag_detail_url', kwargs={'slug': self.slug})
+
+	def get_update_url(self):
+		return reverse('dracoin:tag_update_url', kwargs={'slug': self.slug})
 	
+	def get_delete_url(self):
+		return reverse('dracoin:tag_delete_url', kwargs={'slug': self.slug})
+
 	def __str__(self):
 		return self.title
 

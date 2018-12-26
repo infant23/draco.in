@@ -8,7 +8,7 @@
     <h1>Tags list</h1>
     {% if tag_list %}
         {% if tag_list %}
-		    {% for t in tag_list %}
+		    {% for tag in tag_list %}
 		  		{% include 'dracoin/includes/tags.html' %}
 		    {% endfor %}
 		{% else %}
