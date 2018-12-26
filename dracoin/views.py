@@ -7,46 +7,26 @@ from django.views.generic import View
 from django.utils import timezone
 
 from .models import Article, Tag, Image, Comment
-from .utils import ObjectDetailMixin
+from .utils import ObjectDetailMixin, ObjectCreateMixin
 from .forms import PostForm, TagForm
 
 class PostDetail(ObjectDetailMixin, View):
     model = Article
     template = 'dracoin/post_detail.html'
 
-class PostCreate(View):
+class PostCreate(ObjectCreateMixin, View):
+    model_form = PostForm
     template = 'dracoin/post_create.html'
-    def get(self, request):
-        form = PostForm()
-        return render(request, self.template, context={'form': form})
-
-    def post(self, request):
-        bound_form = PostForm(request.POST)
-
-        if bound_form.is_valid():
-            new_tag = bound_form.save()
-            return redirect(new_tag)
-        return render(request, self.template, context={'form': bound_form})
-
 
 class TagDetail(ObjectDetailMixin, View):
     model = Tag
     template = 'dracoin/tag_detail.html'
 
-class TagCreate(View):
+class TagCreate(ObjectCreateMixin, View):
+    model_form = TagForm
     template = 'dracoin/tag_create.html'
-    def get(self, request):
-        form = TagForm()
-        return render(request, self.template, context={'form': form})
 
-    def post(self, request):
-        bound_form = TagForm(request.POST)
 
-        if bound_form.is_valid():
-            new_tag = bound_form.save()
-            return redirect(new_tag)
-        return render(request, self.template, context={'form': bound_form})
-  
 
 def last_articles(request):
     template = 'dracoin/index.html'
