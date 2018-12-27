@@ -8,11 +8,11 @@ from .models import Article, Tag, Image, Comment
 
 
 class ObjectPaginationlMixin:
+    model = None
+    template = None
+    page_value = 2
+    
     def get(self, request):
-        model = None
-        template = None
-        page_value = 2
-
         search_query = request.GET.get('search', '')
         if search_query:
             posts = self.model.objects.filter(
