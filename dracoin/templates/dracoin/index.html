@@ -6,10 +6,33 @@
 
 {% block content %}
     <h1>Main page</h1>
-    {% if article_list %}
-        {% for post in article_list %}
+    {% if page_object %}
+        {% for post in page_object.object_list %}
             {% include 'dracoin/includes/post.html' %}
         {% endfor %}
+        {% if is_paginated %}
+			<nav aria-label="...">
+				<ul class="pagination">
+					<li class="page-item {% if not prev_url %} disabled {% endif %}">
+						<a class="page-link" href="{{ prev_url }}">Previous</a>
+					</li>
+					{% for n in page_object.paginator.page_range %}
+						{% if page_object.number == n %}
+							<li class="page-item active">
+								<a class="page-link" href="?page={{ n }}">{{ n }} <span class="sr-only">(current)</span></a>
+							</li>
+						{% elif n > page_object.number|add:-3 and n < page_object.number|add:3 %}
+							<li class="page-item">
+								<a class="page-link" href="?page={{ n }}">{{ n }}</a>
+							</li>
+						{% endif %}
+					{% endfor %}
+					<li class="page-item {% if not next_url %} disabled {% endif %}">
+						<a class="page-link" href="{{ next_url }}">Next</a>
+					</li>
+				</ul>
+			</nav>
+		{% endif %}
     {% else %}
         <p>No polls are available.</p>
     {% endif %}

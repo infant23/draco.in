@@ -36,6 +36,9 @@ class Article(models.Model):
 	def __str__(self):
 		return self.title
 
+	class Meta:
+		ordering = ['-pub_date']
+
 class Tag(models.Model):
 	title = models.CharField(max_length=200, unique=True)
 	slug = models.SlugField(max_length=200, unique=True)
@@ -51,6 +54,9 @@ class Tag(models.Model):
 
 	def __str__(self):
 		return self.title
+
+	class Meta:
+		ordering = ['title']
 
 class Image(models.Model):
 	title = models.CharField(max_length=200)
