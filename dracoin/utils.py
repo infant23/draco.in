@@ -1,9 +1,44 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 from .models import Article, Tag, Image, Comment
 
+
+class ObjectPaginationlMixin:
+    def get(self, request):
+        model = None
+        template = None
+        page_value = 2
+
+        search_query = request.GET.get('search', '')
+        if search_query:
+            posts = self.model.objects.filter(
+                Q(title__icontains=search_query) | Q(content__icontains=search_query)
+            )
+        else:
+            posts = self.model.objects.all()
+        paginator = Paginator(posts, self.page_value)
+        page_number = request.GET.get('page', 1)
+        page = paginator.get_page(page_number)
+        is_paginated = page.has_other_pages()
+        if page.has_previous():
+            prev_url = '?page={}'.format(page.previous_page_number())
+        else:
+            prev_url = ''
+        if page.has_next():
+            next_url = '?page={}'.format(page.next_page_number())
+        else:
+            next_url = ''
+        context = {
+            'page_object': page,
+            'is_paginated': is_paginated,
+            'next_url': next_url,
+            'prev_url': prev_url
+        }
+        return render(request, self.template, context=context)
 
 class ObjectDetailMixin:
     model = None
@@ -11,7 +46,12 @@ class ObjectDetailMixin:
 
     def get(self, request, slug):
         obj = get_object_or_404(self.model, slug__iexact=slug)
-        return render(request, self.template, context={self.model.__name__.lower() : obj, 'admin_object': obj, 'detail': True})    
+        context={
+            self.model.__name__.lower() : obj,
+            'admin_object': obj,
+            'detail': True
+        }
+        return render(request, self.template, context=context)    
 
 
 class ObjectCreateMixin:

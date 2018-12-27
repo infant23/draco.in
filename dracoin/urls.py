@@ -3,7 +3,8 @@ from .views import *
 
 app_name = 'dracoin'
 urlpatterns = [
-	path('', last_articles, name='index'),
+	path('', PostIndex.as_view(), name='index'),
+	# path('', last_articles, name='index'),
 	path('post/create/', PostCreate.as_view(), name='post_create_url'),
 	path('post/<str:slug>/', PostDetail.as_view(), name='post_detail_url'),
 	path('post/<str:slug>/update/', PostUpdate.as_view(), name='post_update_url'),

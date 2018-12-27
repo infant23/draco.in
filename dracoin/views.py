@@ -7,10 +7,17 @@ from django.views.generic import View
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from .models import Article, Tag, Image, Comment
-from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
+from .utils import ObjectPaginationlMixin, ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
 from .forms import PostForm, TagForm
+
+
+class PostIndex(ObjectPaginationlMixin, View):
+    model = Article
+    template = 'dracoin/index.html'
+    page_value = 5
 
 class PostDetail(ObjectDetailMixin, View):
     model = Article
@@ -56,7 +63,13 @@ class TagDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
 
 def last_articles(request):
     template = 'dracoin/index.html'
-    posts = Article.objects.all()
+    search_query = request.GET.get('search', '')
+    if search_query:
+        posts = Article.objects.filter(
+            Q(title__icontains=search_query) | Q(content__icontains=search_query)
+        )
+    else:
+        posts = Article.objects.all()
     paginator = Paginator(posts, 2)
     page_number = request.GET.get('page', 1)
     page = paginator.get_page(page_number)
