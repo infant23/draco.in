@@ -6,6 +6,8 @@ python3 -m venv myvenv && source myvenv/bin/activate && pip install django==2.0.
 # $ sudo apt install python-virtualenv
 # $ virtualenv --python=python3.4 myvenv
 
+source myvenv/bin/activate
+
 django-admin startproject mysite .
 python manage.py migrate
 python manage.py runserver 0:8000
