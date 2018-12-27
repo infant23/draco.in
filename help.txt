@@ -32,5 +32,10 @@ threeone4
 # #use:
 # python -m smtpd -n -c DebuggingServer localhost:1025
 
+.gitignore:
+myvenv/
+*.pyc
 
+and do:
+find . -name "*.pyc" -exec git rm -f "{}" \;
 
