@@ -25,8 +25,8 @@ class Article(models.Model):
 	def get_delete_url(self):
 		return reverse('dracoin:post_delete_url', kwargs={'slug': self.slug})
 
-	def get_comments(self):
-		return Comment.objects.filter(root=self.pk)
+	def get_add_comment_url(self):
+		return reverse('dracoin:add_comment_url', kwargs={'slug': self.slug})
 
 	def save(self, *args, **kwargs):
 		if not self.id:
@@ -70,8 +70,10 @@ class Comment(models.Model):
 	email = models.EmailField(max_length=200)
 	content = models.TextField(max_length=500, db_index=True)
 	root = models.ForeignKey(Article, on_delete=models.CASCADE)
-	previous = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
 	pub_date = models.DateTimeField('date published', auto_now_add=True)
 	
 	def __str__(self):
 		return self.content
+
+	class Meta:
+		ordering = ['-pub_date']

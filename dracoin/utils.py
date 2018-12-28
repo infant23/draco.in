@@ -51,7 +51,7 @@ class ObjectDetailMixin:
             'admin_object': obj,
             'detail': True
         }
-        return render(request, self.template, context=context)    
+        return render(request, self.template, context=context)
 
 
 class ObjectCreateMixin:

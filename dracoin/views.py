@@ -11,7 +11,7 @@ from django.db.models import Q
 
 from .models import Article, Tag, Image, Comment
 from .utils import ObjectPaginationlMixin, ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
-from .forms import PostForm, TagForm
+from .forms import PostForm, TagForm, CommentForm
 
 
 class PostIndex(ObjectPaginationlMixin, View):
@@ -19,9 +19,55 @@ class PostIndex(ObjectPaginationlMixin, View):
     template = 'dracoin/index.html'
     page_value = 5
 
-class PostDetail(ObjectDetailMixin, View):
+# class PostDetail(ObjectDetailMixin, View):
+#     model = Article
+#     template = 'dracoin/post_detail.html'
+
+class PostDetail(View):
     model = Article
     template = 'dracoin/post_detail.html'
+    page_value = 2
+    model_form = CommentForm
+
+    def get(self, request, slug):
+        obj = get_object_or_404(self.model, slug__iexact=slug)
+        comments = Comment.objects.filter(root=obj.pk)
+        paginator = Paginator(comments, self.page_value)
+        page_number = request.GET.get('page', 1)
+        page = paginator.get_page(page_number)
+        is_paginated = page.has_other_pages()
+        if page.has_previous():
+            prev_url = '?page={}'.format(page.previous_page_number())
+        else:
+            prev_url = ''
+        if page.has_next():
+            next_url = '?page={}'.format(page.next_page_number())
+        else:
+            next_url = ''
+        context = {
+            self.model.__name__.lower() : obj,
+            'admin_object': obj,
+            'detail': True,
+            'page_object': page,
+            'is_paginated': is_paginated,
+            'next_url': next_url,
+            'prev_url': prev_url,
+            'form': self.model_form
+        }
+        return render(request, self.template, context=context)
+    def post(self, request, slug):
+        print(request.POST)
+        bound_form = self.model_form(request.POST)
+        obj = self.model.objects.get(slug__iexact=slug)
+        print(obj)
+        # bound_form.root = obj.pk
+        print(obj.pk)
+        # bound_form['root'] = obj.pk
+        if bound_form.is_valid():
+            new_obj = bound_form.save()
+            # return redirect(new_obj)
+        # return render(request, self.template, context=context)
+        return redirect(reverse('dracoin:index'))
 
 class PostCreate(LoginRequiredMixin, ObjectCreateMixin, View):
     model_form = PostForm
