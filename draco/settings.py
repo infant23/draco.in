@@ -25,13 +25,14 @@ SECRET_KEY = '%q1zi1$62$5tlnye+w=m)0j!w2x=r*#**d0(a-)h-gh^ppcilw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost',]
+ALLOWED_HOSTS = ['localhost', '192.168.8.214']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     # 'dracoin.apps.DracoinConfig',
+    'tinymce',
     'dracoin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -126,6 +127,59 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
 # Mediafiles (Images, etc.)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload/')
 MEDIA_URL = '/upload/'
+
+
+# TinyMCE configuration
+TINYMCE_DEFAULT_CONFIG = {
+    'content_css': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
+    'height': 360,
+    # 'toolbar': 'codesample',
+    # 'toolbar': 'newdocument, undo, redo, visualaid, cut, copy, paste, selectall, bold, italic, underline, strikethrough, subscript, superscript, removeformat, formats',
+    'plugins': [
+      'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+      'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+      'save table contextmenu directionality emoticons template paste textcolor', 'codesample',
+    ],
+    'toolbar': 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons | codesample'
+    # 'codesample_languages': [
+    #     {'text': 'HTML/XML', 'value': 'markup'},
+    #     {'text': 'JavaScript', 'value': 'javascript'},
+    #     {'text': 'CSS', 'value': 'css'},
+    #     {'text': 'Python', 'value': 'python'},
+    #     {'text': 'C', 'value': 'c'},
+    #     {'text': 'C++', 'value': 'cpp'},
+    #     {'text': 'Arduino', 'value': 'arduino'},
+    #     {'text': 'Diff', 'value': 'diff'},
+    #     {'text': 'Django/Jinja2', 'value': 'django'},
+    #     {'text': 'Docker', 'value': 'docker'},
+    #     {'text': 'Git', 'value': 'git'},
+    #     {'text': 'SQL', 'value': 'sql'},
+    #     {'text': 'Makefile', 'value': 'makefile'},
+    #     {'text': 'Markdown', 'value': 'markdown'},
+    #     {'text': 'Haskell', 'value': 'haskell'},
+    #     {'text': 'LaTeX', 'value': 'latex'},
+    #     {'text': 'JSON+JSONP', 'value': 'json'},
+    # ],
+        # JavaScript
+        # Markup + HTML + XML + SVG + MathML
+        # Arduino
+        # Bash + Shell
+        # C
+        # C++
+        # Diff
+        # Django/Jinja2
+        # Docker
+        # Git
+        # vim
+        # SQL
+        # Makefile
+        # Markdown
+        # LaTeX
+        # JSON + JSONP
+        # Python
+        # Haskell
+}
+
 
 # Email settings SMTP:
 

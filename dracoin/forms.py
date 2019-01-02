@@ -1,6 +1,7 @@
 from django import forms
 from .models import Article, Tag, Comment, Image
 from django.core.exceptions import ValidationError
+from tinymce import TinyMCE
 
 
 class PostForm(forms.ModelForm):
@@ -12,7 +13,9 @@ class PostForm(forms.ModelForm):
 		widgets = {
 			'title': forms.TextInput(attrs={'class': 'form-control'}),
 			'slug': forms.TextInput(attrs={'class': 'form-control'}),
-			'content': forms.Textarea(attrs={'class': 'form-control'}),
+			'content': TinyMCE(mce_attrs={'width': 800}),
+			'content': TinyMCE(attrs={'class': 'form-control'}),
+			# 'content': forms.Textarea(attrs={'class': 'form-control'}),
 			'author': forms.TextInput(attrs={'class': 'form-control'}),
 			'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
 		}
