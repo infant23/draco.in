@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-	<h1>Create new tag:</h1>
+	<h1>Update tag:</h1>
 	<form action="{{ tag.get_update_url }}" method="post">
 		{% csrf_token %}
 		{% for field in form %}

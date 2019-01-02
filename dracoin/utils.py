@@ -63,7 +63,7 @@ class ObjectCreateMixin:
         return render(request, self.template, context={'form': form})
 
     def post(self, request):
-        bound_form = self.model_form(request.POST)
+        bound_form = self.model_form(request.POST, request.FILES)
 
         if bound_form.is_valid():
             new_obj = bound_form.save()
@@ -86,7 +86,7 @@ class ObjectUpdateMixin:
 
     def post(self, request, slug):
         obj = self.model.objects.get(slug__iexact=slug)
-        bound_form = self.model_form(request.POST, instance=obj)
+        bound_form = self.model_form(request.POST, request.FILES, instance=obj)
 
         if bound_form.is_valid():
             new_obj = bound_form.save()

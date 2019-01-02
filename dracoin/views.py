@@ -11,7 +11,7 @@ from django.db.models import Q
 
 from .models import Article, Tag, Image, Comment
 from .utils import ObjectPaginationlMixin, ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
-from .forms import PostForm, TagForm, CommentForm
+from .forms import PostForm, TagForm, CommentForm, ImageForm
 
 
 class PostIndex(ObjectPaginationlMixin, View):
@@ -135,6 +135,33 @@ def last_articles(request):
         'prev_url':prev_url
     }
     return render(request, template, context=context)
+
+def all_images(request):
+    template = 'dracoin/image_list.html'
+    image_list = Image.objects.all()
+    return render(request, template, context={'image_list' : image_list})
+
+class ImageDetail(ObjectDetailMixin, View):
+    model = Image
+    template = 'dracoin/image_detail.html'
+
+class ImageCreate(LoginRequiredMixin, ObjectCreateMixin, View):
+    model_form = ImageForm
+    template = 'dracoin/image_create.html'
+    raise_exception = True
+
+class ImageUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
+    model = Image
+    model_form = ImageForm
+    template = 'dracoin/tag_update.html'
+    raise_exception = True
+
+class ImageDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
+    model = Image
+    template = 'dracoin/image_delete.html'
+    page = 'dracoin:image_list_url'
+    raise_exception = True
+
 
 def post_detail(request, slug):
     template = 'dracoin/detail.html'

@@ -1,0 +1,15 @@
+{% extends 'dracoin/base_blog.html' %}
+
+{% block title %}
+    {{ block.super }} | Delete Tag "{{ image.title|title }}"
+{% endblock %}
+
+{% block content %}
+	<h1>Delete image:</h1>
+	<form action="{{ image.get_delete_url }}" method="post">
+		{% csrf_token %}
+		<h3>Are you sure you want to delete <b>"{{ image.title|title }}"</b> image?</h3>
+		<a href="{{ image.get_absolute_url }}">Censel</a>
+		<button type="submit" class="btn btn-primary">Delete Image</button>
+	</form>
+{% endblock %}

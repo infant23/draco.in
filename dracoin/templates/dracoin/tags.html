@@ -1,4 +1,5 @@
 {% extends 'dracoin/base_blog.html' %}
+
 {% block title %}
     {{ block.super }} | All Tags
 {% endblock %}
@@ -6,13 +7,9 @@
 {% block content %}
     <h1>Tags list</h1>
     {% if tag_list %}
-        {% if tag_list %}
-		    {% for tag in tag_list %}
-		  		{% include 'dracoin/includes/tags.html' %}
-		    {% endfor %}
-		{% else %}
-		    <p>No tags are available.</p>
-		{% endif %}
+        {% for tag in tag_list %}
+            {% include 'dracoin/includes/tag.html' %}
+        {% endfor %}
     {% else %}
         <p>No tags are available.</p>
     {% endif %}

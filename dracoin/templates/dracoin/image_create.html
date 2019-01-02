@@ -1,12 +1,12 @@
 {% extends 'dracoin/base_blog.html' %}
 
 {% block title %}
-    {{ block.super }} | Edit Post "{{ post.title|title }}"
+    {{ block.super }} | New Image
 {% endblock %}
 
 {% block content %}
-	<h1>Update post:</h1>
-	<form action="{{ post.get_update_url }}" method="post">
+	<h1>Create new image:</h1>
+	<form action="{% url 'dracoin:image_create_url' %}" method="post" enctype="multipart/form-data">
 		{% csrf_token %}
 		{% for field in form %}
 			<div class="form-group">
@@ -19,6 +19,6 @@
 				{{ field }}
 			</div>
 		{% endfor %}
-		<button type="submit" class="btn btn-primary">Update Post</button>		
+		<button type="submit" class="btn btn-primary">Create Image</button>		
 	</form>
 {% endblock %}

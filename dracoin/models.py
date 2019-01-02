@@ -60,7 +60,17 @@ class Tag(models.Model):
 
 class Image(models.Model):
 	title = models.CharField(max_length=200)
+	slug = models.SlugField(max_length=200, blank=True, unique=True)
 	image = models.ImageField(upload_to='pictures')
+	
+	def get_absolute_url(self):
+		return reverse('dracoin:image_detail_url', kwargs={'slug': self.slug})
+
+	def get_update_url(self):
+		return reverse('dracoin:image_update_url', kwargs={'slug': self.slug})
+	
+	def get_delete_url(self):
+		return reverse('dracoin:image_delete_url', kwargs={'slug': self.slug})
 	
 	def __str__(self):
 		return self.title

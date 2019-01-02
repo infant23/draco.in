@@ -6,11 +6,11 @@
 
 {% block content %}
 	<h1 class="mt-5">{{ article.title }}</h1>
-	<p>{{ article.content }}</p>
+	<p>{{ article.content|safe }}</p>
 	<p>{{ article.author }}</p>
 	<p>{{ article.pub_date }}</p>
 	{% for tag in article.tags.all %}
-  		{% include 'dracoin/includes/tags.html' %}
+  		{% include 'dracoin/includes/tag.html' %}
     {% endfor %}
 	{% if page_object.object_list %}
 		{% if is_paginated %}

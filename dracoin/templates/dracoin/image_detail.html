@@ -1,0 +1,14 @@
+{% extends 'dracoin/base_blog.html' %}
+
+{% block title %}
+    {{ block.super }} | {{ image.title }}
+{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">{{ image.title }}</h1>
+    <p>{{ image.get_absolute_url }}</p>
+    {{ MEDIA_URL }} - {{ image.image.url }}
+    <a class="dropdown-item" href="{{ MEDIA_URL }}">Root</a>
+    <a class="dropdown-item" href="{{ image.image.url }}">Image</a>
+    <img src="{{ image.image.url }}" width="50px" height="50px">
+{% endblock %}

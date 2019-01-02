@@ -1,0 +1,16 @@
+{% extends 'dracoin/base_blog.html' %}
+
+{% block title %}
+    {{ block.super }} | All Imges
+{% endblock %}
+
+{% block content %}
+    <h1>Images list</h1>
+    {% if image_list %}
+        {% for image in image_list %}
+            {% include 'dracoin/includes/image.html' %}
+        {% endfor %}
+    {% else %}
+        <p>No images are available.</p>
+    {% endif %}
+{% endblock %}
