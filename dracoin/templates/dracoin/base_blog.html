@@ -9,4 +9,5 @@
 	</div>
 	<a href="{{ admin_object.get_update_url }}" class="btn btn-secondary edit" style="{% if detail %} display: block; {% endif %}">Edit</a>
 	<a href="{{ admin_object.get_delete_url }}" class="btn btn-danger delete" style="{% if detail %} display: block; {% endif %}">Delete</a>
+	<a href="{{ article.get_absolute_url }}" class="btn btn-success edit" style="{% if article %} display: block; {% endif %}">Show</a>
 {% endblock %}

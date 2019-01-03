@@ -80,7 +80,7 @@ class Image(models.Model):
 class Comment(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField(max_length=200)
-    content = models.TextField(max_length=500, db_index=True)
+    content = HTMLField(max_length=500, db_index=True)
     root = models.ForeignKey(Article, on_delete=models.CASCADE)
     pub_date = models.DateTimeField('date published', auto_now_add=True)
 

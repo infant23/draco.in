@@ -6,7 +6,7 @@
 
 {% block content %}
 	<h1>Update post:</h1>
-	<form action="{{ post.get_update_url }}" method="post">
+	<form action="{{ post.get_update_url }}" method="post" class="admin">
 		{% csrf_token %}
 		{% for field in form %}
 			<div class="form-group">

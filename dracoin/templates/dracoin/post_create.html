@@ -6,7 +6,7 @@
 
 {% block content %}
 	<h1>Create new post:</h1>
-	<form action="{% url 'dracoin:post_create_url' %}" method="post">
+	<form action="{% url 'dracoin:post_create_url' %}" method="post" class="admin">
 		{% csrf_token %}
 		{% for field in form %}
 			<div class="form-group">

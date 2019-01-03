@@ -13,8 +13,8 @@ class PostForm(forms.ModelForm):
 		widgets = {
 			'title': forms.TextInput(attrs={'class': 'form-control'}),
 			'slug': forms.TextInput(attrs={'class': 'form-control'}),
-			'content': TinyMCE(mce_attrs={'width': 800}),
-			'content': TinyMCE(attrs={'class': 'form-control'}),
+			# 'content': TinyMCE(mce_attrs={'width': 800}),
+			'content': TinyMCE(attrs={'class': 'admin form-control'}),
 			# 'content': forms.Textarea(attrs={'class': 'form-control'}),
 			'author': forms.TextInput(attrs={'class': 'form-control'}),
 			'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
@@ -79,5 +79,6 @@ class CommentForm(forms.ModelForm):
 		widgets = {
 			'name': forms.TextInput(attrs={'class': 'form-control'}),
 			'email': forms.TextInput(attrs={'class': 'form-control'}),
-			'content': forms.Textarea(attrs={'class': 'form-control'}),
+			'content': TinyMCE(attrs={'class': 'user form-control'}),
+			# , profile='default_profile'
 		}

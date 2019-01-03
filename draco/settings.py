@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from urllib.parse import urljoin
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -107,7 +108,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGES = [
+    ('en', ('English')),
+]
+
+LANGUAGE_CODE = 'en-GB'
 
 TIME_ZONE = 'Europe/Kiev'
 
@@ -131,53 +136,78 @@ MEDIA_URL = '/upload/'
 
 # TinyMCE configuration
 TINYMCE_DEFAULT_CONFIG = {
+    # 'selector': '#admin textarea', # chose form selector to personalise configuration
+    'selector': 'textarea.admin', # chose form selector to personalise configuration
+    'language': 'en-GB',
+    'language_url': urljoin(STATIC_URL, 'languages/en_GB.js'),
+    # 'language': 'uk',
+    # 'language_url': urljoin(STATIC_URL, 'languages/uk.js'),
+    # 'language_url': '../../../../static/languages/uk.js',
+    # 'language_url': os.path.join(BASE_DIR, 'static/languages/uk.js'),
+    # 'language': 'ru',
+    # 'language_url': urljoin(STATIC_URL, 'languages/ru.js'),
     'content_css': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
     'height': 360,
-    # 'toolbar': 'codesample',
-    # 'toolbar': 'newdocument, undo, redo, visualaid, cut, copy, paste, selectall, bold, italic, underline, strikethrough, subscript, superscript, removeformat, formats',
     'plugins': [
-      'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
-      'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-      'save table contextmenu directionality emoticons template paste textcolor', 'codesample',
+      'autosave advlist autolink link image lists charmap print preview hr anchor pagebreak \
+      searchreplace wordcount visualblocks visualchars code fullscreen \
+      insertdatetime media nonbreaking save table contextmenu directionality emoticons \
+      paste codesample help',
     ],
-    'toolbar': 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons | codesample'
+    'inline': False,
+    'contextmenu': 'link anchor image',
+    'menubar': 'file edit insert view format table help',
+    'statusbar': True,
+    'toolbar1': 'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | searchreplace visualblocks fullscreen preview code',
+    'toolbar2': 'bold italic underline | link anchor image blockquote charmap hr codesample',
+    'codesample_languages': [
+        {'text': 'C-like', 'value': 'clike'},
+        {'text': 'C++', 'value': 'cpp'},
+        {'text': 'Makefile', 'value': 'makefile'},
+        {'text': 'Python', 'value': 'python'},
+        {'text': 'Django/Jinja2', 'value': 'django'},
+        {'text': 'Haskell', 'value': 'haskell'},
+        {'text': 'SQL', 'value': 'sql'},
+        {'text': 'JSON+JSONP', 'value': 'json'},
+        {'text': 'HTML/XML', 'value': 'html'},
+        {'text': 'CSS', 'value': 'css'},
+        {'text': 'JavaScript', 'value': 'javascript'},
+        {'text': 'Diff', 'value': 'diff'},
+        {'text': 'Docker', 'value': 'docker'},
+        {'text': 'Git', 'value': 'git'},
+        {'text': 'Markdown', 'value': 'markdown'},
+        {'text': 'LaTeX', 'value': 'latex'},
+        {'text': 'Arduino', 'value': 'arduino'},
+    ],
+    # 'selector': 'textarea.user', # chose form selector to personalise configuration
+    # 'content_css': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
+    # 'height': 200,
+    # 'plugins': [
+    #   'autosave advlist autolink link lists charmap preview wordcount insertdatetime emoticons paste codesample',
+    # ],
+    # 'contextmenu': False,
+    # 'menubar': False,
+    # 'statusbar': True,
+    # 'toolbar': 'insertfile undo redo | bold italic underline | bullist numlist | link blockquote emoticons charmap codesample | preview',
     # 'codesample_languages': [
-    #     {'text': 'HTML/XML', 'value': 'markup'},
-    #     {'text': 'JavaScript', 'value': 'javascript'},
-    #     {'text': 'CSS', 'value': 'css'},
-    #     {'text': 'Python', 'value': 'python'},
-    #     {'text': 'C', 'value': 'c'},
+    #     {'text': 'C-like', 'value': 'clike'},
     #     {'text': 'C++', 'value': 'cpp'},
-    #     {'text': 'Arduino', 'value': 'arduino'},
-    #     {'text': 'Diff', 'value': 'diff'},
+    #     {'text': 'Makefile', 'value': 'makefile'},
+    #     {'text': 'Python', 'value': 'python'},
     #     {'text': 'Django/Jinja2', 'value': 'django'},
+    #     {'text': 'Haskell', 'value': 'haskell'},
+    #     {'text': 'SQL', 'value': 'sql'},
+    #     {'text': 'JSON+JSONP', 'value': 'json'},
+    #     {'text': 'HTML/XML', 'value': 'html'},
+    #     {'text': 'CSS', 'value': 'css'},
+    #     {'text': 'JavaScript', 'value': 'javascript'},
+    #     {'text': 'Diff', 'value': 'diff'},
     #     {'text': 'Docker', 'value': 'docker'},
     #     {'text': 'Git', 'value': 'git'},
-    #     {'text': 'SQL', 'value': 'sql'},
-    #     {'text': 'Makefile', 'value': 'makefile'},
     #     {'text': 'Markdown', 'value': 'markdown'},
-    #     {'text': 'Haskell', 'value': 'haskell'},
     #     {'text': 'LaTeX', 'value': 'latex'},
-    #     {'text': 'JSON+JSONP', 'value': 'json'},
-    # ],
-        # JavaScript
-        # Markup + HTML + XML + SVG + MathML
-        # Arduino
-        # Bash + Shell
-        # C
-        # C++
-        # Diff
-        # Django/Jinja2
-        # Docker
-        # Git
-        # vim
-        # SQL
-        # Makefile
-        # Markdown
-        # LaTeX
-        # JSON + JSONP
-        # Python
-        # Haskell
+    #     {'text': 'Arduino', 'value': 'arduino'},
+    # ]
 }
 
 
