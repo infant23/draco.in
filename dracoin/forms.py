@@ -2,6 +2,7 @@ from django import forms
 from .models import Article, Tag, Comment, Image
 from django.core.exceptions import ValidationError
 from tinymce import TinyMCE
+from .tinymce_config import TINYMCE_POST_CONFIG, TINYMCE_COMMENT_CONFIG 
 
 
 class PostForm(forms.ModelForm):
@@ -14,7 +15,7 @@ class PostForm(forms.ModelForm):
 			'title': forms.TextInput(attrs={'class': 'form-control'}),
 			'slug': forms.TextInput(attrs={'class': 'form-control'}),
 			# 'content': TinyMCE(mce_attrs={'width': 800}),
-			'content': TinyMCE(attrs={'class': 'admin form-control'}),
+			'content': TinyMCE(attrs={'class': 'form-control'}, mce_attrs=TINYMCE_POST_CONFIG),
 			# 'content': forms.Textarea(attrs={'class': 'form-control'}),
 			'author': forms.TextInput(attrs={'class': 'form-control'}),
 			'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
@@ -79,6 +80,6 @@ class CommentForm(forms.ModelForm):
 		widgets = {
 			'name': forms.TextInput(attrs={'class': 'form-control'}),
 			'email': forms.TextInput(attrs={'class': 'form-control'}),
-			'content': TinyMCE(attrs={'class': 'user form-control'}),
+			'content': TinyMCE(attrs={'class': 'form-control'}, mce_attrs=TINYMCE_COMMENT_CONFIG),
 			# , profile='default_profile'
 		}

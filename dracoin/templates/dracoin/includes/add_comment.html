@@ -1,5 +1,5 @@
 <h1>Add comment:</h1>
-<form action="{{ article.get_add_comment_url }}" method="post" class="user">
+<form action="{{ article.get_add_comment_url }}" method="post">
 	{% csrf_token %}
 	{% for field in form %}
 		<div class="form-group">
